@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TALLER</title>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <main>
+        <table>
+            <thead>
+                    <th>Nombre</th>
+                    <th>Cedula</th>
+                    <th>Telefono</th>
+                    <th>Edad</th>
+                    <th>Estado</th>
+    
+            </thead>
+            <tbody>
+                <tr v-for="(item , idx) in users">
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.cedula}}</td>
+                        <td>{{item.telefono}}</td>
+                        <td>{{item.edad}}</td>
+                        <td v-if="item.edad && item.edad <18">MENOR DE EDAD</td>
+                        <td v-else="item.edad && item.edad >18">MAYOR DE EDAD</td>
+                        
+    
+               </tr>
+            </tbody>
+        </table>
+
+        <form action="" @submit.prevent="createuser">
+            <input type="text" placeholder="Nombre" v-model="objUser.nombre">
+            <input type="number" placeholder="Cedula" v-model="objUser.cedula">
+            <input type="number" placeholder="Telefono" v-model="objUser.telefono">
+            <input type="number" placeholder="Edad" v-model="objUser.edad">
+            <input type="submit" value="Guardar">
+        </form>
+
+        {{$data}}
+    </main>
+    
+</body>
+
+<script type="text/javascript">
+    new Vue({
+        el:'main',
+        data:{
+            users:[
+                {'nombre':'Jona','cedula':'33333','telefono':'22222','edad':'45'},
+               
+            ],
+            objUser: {'nombre':null,'cedula':null,'telefono':null,'edad':null}      
+        },
+        methods:{
+            createuser(){
+                this.users.unshift(this.objUser);
+                this.orderUser;
+                this.objUser={'nombre':null,'cedula':null,'telefono':null,'edad':null} 
+            }
+        },
+        computed:{
+            orderUser(){
+                return this.users.sort(function(a,b){
+                    if(a.nombre > b.nombre){
+                        return 1;
+                    }
+
+                    if(a.nombre < b.nombre){
+                        return -1;
+                    }
+                    return 0;
+                });
+            }
+
+        }
+    });
+
+
+</script>
+
+
+</html>
